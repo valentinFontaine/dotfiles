@@ -26,6 +26,16 @@ set number "Affiche le numéro de ligne
 set ruler "Affiche le numéro de ligne 
 set wrap  "Remet à la ligne les lignes trop longues
 
+"Affiche numéro de ligne en nombre relatifs
+:set number relativenumber
+
+:augroup numbertoggle
+:  autocmd!
+:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+:augroup END
+
+
 "Indentation
 set autoindent "Auto-indentation des nouvelles lignes
 set expandtab  " Remplace les tabulations par des espaces 
@@ -73,11 +83,11 @@ noremap <C-c> "+y
 noremap <C-x> "+x
 
 
-"remapper les tabulation en mode visuel
-
-
 let mapleader = "'"
 set hidden
+
+
+
 "ajout des modifications du clavier bépo
 source ~/.vim/.vimrc.bepo
 
