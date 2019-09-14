@@ -10,13 +10,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 "Plugin
-Plugin 'itchyny/lightline.vim'
-Plugin 'sjbach/lusty'
-Plugin 'mileszs/ack.vim'
-Plugin 'kien/ctrlp.vim'
-
-"Color schemes
-Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()
 filetype plugin indent on
@@ -28,13 +21,6 @@ set wrap  "Remet à la ligne les lignes trop longues
 
 "Affiche numéro de ligne en nombre relatifs
 :set number relativenumber
-
-:augroup numbertoggle
-:  autocmd!
-:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-:augroup END
-
 
 "Indentation
 set autoindent "Auto-indentation des nouvelles lignes
@@ -62,7 +48,7 @@ set backspace=indent,eol,start
 "Active la coloration syntaxique
 syntax enable
 set background=dark
-colorscheme solarized
+colorscheme desert
 
 
 "Desactivation des touches directionnelles
