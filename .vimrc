@@ -2,6 +2,19 @@
 set nocompatible
 filetype off
 
+" Gestion des plugins
+" ____________________
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+
+call plug#end()
+
 set title "Met à jour le titre de la fenetre
 set number "Affiche le numéro de ligne
 set ruler "Affiche le numéro de ligne 
@@ -153,3 +166,4 @@ noremap wo <C-w>s
 noremap wp <C-w>o
 noremap w<SPACE> :split<CR>
 noremap w<CR> :vsplit<CR>
+
