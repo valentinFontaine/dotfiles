@@ -13,6 +13,9 @@ endif
 
 call plug#begin()
 
+    "Vim HardTime
+    Plug 'takac/vim-hardtime'
+
 call plug#end()
 
 set title "Met à jour le titre de la fenetre
@@ -51,6 +54,15 @@ syntax enable
 set background=dark
 colorscheme desert
 
+
+"Configuration de Hard-time
+let g:hardtime_default_on = 1
+let g:list_of_normal_keys = ["c", "t", "s", "r", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_visual_keys = ["c", "t", "s", "r", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_disabled_keys = []
+let g:hardtime_showmsg = 1
+let g:hardtime_allow_different_key = 1
 
 "Desactivation des touches directionnelles
 map <up> <nop>
