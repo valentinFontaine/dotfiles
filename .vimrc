@@ -179,3 +179,17 @@ noremap wp <C-w>o
 noremap w<SPACE> :split<CR>
 noremap w<CR> :vsplit<CR>
 
+
+" Remappage des touches bépo pour l'utilisation de netrw
+" ____________________________________________________ 
+if has("autocmd")
+augroup netrw_dvorak_fix
+    autocmd!
+    autocmd filetype netrw call Fix_netrw_maps_for_dvorak()
+augroup END
+function! Fix_netrw_maps_for_dvorak()
+    noremap <buffer> t j
+    noremap <buffer> s k
+    noremap <buffer> k s
+endfunction
+endif
