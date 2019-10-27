@@ -23,6 +23,11 @@ set number "Affiche le numéro de ligne
 set ruler "Affiche le numéro de ligne 
 set wrap  "Remet à la ligne les lignes trop longues
 
+
+"Encodage en utf-8 
+set encoding=utf-8
+set fileencoding=utf-8
+
 "Affiche numéro de ligne en nombre relatifs
 :set number relativenumber
 
