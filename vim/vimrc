@@ -4,7 +4,8 @@ filetype off
 
 " Gestion des plugins
 " ____________________
-
+" 
+" Attention de bien vérifier que le programme curl est bien installé !
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -198,3 +199,54 @@ function! Fix_netrw_maps_for_dvorak()
     noremap <buffer> k s
 endfunction
 endif
+
+"Remap de la touche échap
+:imap ,, <Esc>
+:map ,, <Esc>
+
+
+" {W} -> [É]
+" ——————————
+" On remappe W sur É :
+noremap é w
+noremap É W
+" Corollaire: on remplace les text objects aw, aW, iw et iW
+" pour effacer/remplacer un mot quand on n’est pas au début (daé / laé).
+noremap aé aw
+noremap aÉ aW
+noremap ié iw
+noremap iÉ iW
+" Pour faciliter les manipulations de fenêtres, on utilise {W} comme un Ctrl+W :
+noremap w <C-w>
+noremap W <C-w><C-w>
+ 
+" [HJKL] -> {CTSR}
+" ————————————————
+" {cr} = « gauche / droite »
+noremap c h
+noremap r l
+" {ts} = « haut / bas »
+noremap t j
+noremap s k
+" {CR} = « haut / bas de l'écran »
+noremap C H
+noremap R L
+" {TS} = « joindre / aide »
+noremap T J
+noremap S K
+ 
+" {HJKL} <- [CTSR]
+" ————————————————
+" {J} = « Jusqu'à »            (j = suivant, J = précédant)
+noremap j t
+noremap J T
+" {L} = « Change »             (l = attend un mvt, L = jusqu'à la fin de ligne)
+noremap l c
+noremap L C
+" {H} = « Remplace »           (h = un caractère slt, H = reste en « Remplace »)
+noremap h r
+noremap H R
+" {K} = « Substitue »          (k = caractère, K = ligne)
+noremap k s
+noremap K S
+" Corollaire : correction orthographique
