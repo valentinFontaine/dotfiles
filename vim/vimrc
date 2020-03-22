@@ -80,21 +80,10 @@ imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
 
-"Remaper les copier - coller des fenêtres extérieures 
-"____________________________________________________
-
-noremap <C-v> "+gP
-noremap <C-c> "+y
-noremap <C-x> "+x
-
-
 let mapleader = "'"
 set hidden
 
-
-
 "ajout des modifications du clavier bépo
-"source ~/.vim/.vimrc.bepo
 
 "Remap de la touche échap
 :imap ,, <Esc>
@@ -130,9 +119,6 @@ noremap R L
 " {TS} = « joindre / aide »
 noremap T J
 noremap S K
-" Corollaire : repli suivant / précédent
-noremap zs zj
-noremap zt zk
  
 " {HJKL} <- [CTSR]
 " ————————————————
