@@ -16,6 +16,7 @@ call plug#begin()
 
     "Vim HardTime
     Plug 'takac/vim-hardtime'
+    Plug 'tclem/vim-arduino'
 
 call plug#end()
 
@@ -39,8 +40,6 @@ set shiftwidth=4 " auto indentation de 4 espaces
 set smartindent 
 set smarttab
 set softtabstop=4 "Tabulation = 4 espaces 
-
-set scrolloff=3  "Affiche un minimum de 3 ligne autour du curseur 
 
 " Recherche 
 set ignorecase 
