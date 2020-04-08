@@ -59,6 +59,11 @@ syntax enable
 set background=dark
 colorscheme desert
 
+"change coloration pour le surlignement de la recherche (ne fonctionne que
+"pour les consoles collorées
+hi Search cterm=NONE ctermfg=DarkGrey ctermbg=lightMagenta
+hi IncSearch cterm=NONE ctermfg=DarkGrey ctermbg=lightGreen
+
 
 "Configuration de Hard-time
 let g:hardtime_default_on = 1
