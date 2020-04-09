@@ -176,8 +176,8 @@ noremap wR <C-w>L
 noremap wd <C-w>c
 noremap wo <C-w>s
 noremap wp <C-w>o
-noremap w<SPACE> :split<CR>
-noremap w<CR> :vsplit<CR>
+noremap w<SPACE> :new<CR><C-w>J
+noremap w<CR> :vnew<CR><C-w>L
 
 
 " Remappage des touches bépo pour l'utilisation de netrw
