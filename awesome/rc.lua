@@ -18,6 +18,12 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- definition of useful functions
+function firstToUpper(str)
+--    return(str:gsub("^%1", string.upper))
+    return (string.upper(string.sub(str, 1, 1))..string.sub(str, 2))
+end
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -489,6 +495,14 @@ awful.rules.rules = {
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen
      }
     },
+    
+    -- Transparent terminal
+     { rule = { class = firstToUpper(terminal) },
+       properties = { opacity = 0.85 } },
+    -- Set Firefox to always map on the tag named "2" on screen 1.
+    -- { rule = { class = "Firefox" },
+    --   properties = { screen = 1, tag = "2" } },
+
 
     -- Floating clients.
     { rule_any = {
@@ -594,11 +608,9 @@ end)
 
 client.connect_signal("focus", function(c) 
     c.border_color = beautiful.border_focus 
-    c.opacity = 1 
 end)
 client.connect_signal("unfocus", function(c) 
     c.border_color = beautiful.border_normal 
-    c.opacity = 0.0
 end)
 -- }}}
 
