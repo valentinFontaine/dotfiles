@@ -8,6 +8,9 @@ local awful = require("awful")
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
+local battery_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+local brightness_widget = require("awesome-wm-widgets.brightnessarc-widget.brightnessarc")
+local volumebar_widget = require("awesome-wm-widgets.volumebar-widget.volumebar")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
@@ -15,8 +18,11 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
+
+-- Local Widgets 
+
 -- when client with a matching name is opened:
-require("awful.hotkeys_popup.keys")
+    require("awful.hotkeys_popup.keys")
 
 -- definition of useful functions
 function firstToUpper(str)
@@ -112,6 +118,8 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                   }
                         })
 
+
+
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
 
@@ -120,12 +128,15 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 app_folders = { "/usr/share/applications", "~/.local/share/applications" }
 
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+
+-- separator
+myseparator = wibox.widget.textbox()
+myseparator:set_text(" | ")
+
+
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -220,17 +231,35 @@ s.mywibox = awful.wibar({ position = "top", screen = s })
 s.mywibox:setup {
     layout = wibox.layout.align.horizontal,
     { -- Left widgets
-        layout = wibox.layout.fixed.horizontal,
+       layout = wibox.layout.fixed.horizontal,
         mylauncher,
         s.mytaglist,
         s.mypromptbox,
+        myseparator,
     },
-    s.mytasklist, -- Middle widget
+    -- Middle widgets    
+        mytextclock,
     { -- Right widgets
         layout = wibox.layout.fixed.horizontal,
-        mykeyboardlayout,
+        myseparator, 
+        --brightness_widget(),
+        --volumebar_widget(),
+        volumebar_widget({
+            main_color = '#af13f7',
+            mute_color = '#ff0000',
+            width = 80,
+            shape = 'rounded_bar', -- octogon, hexagon, powerline, etc
+            -- bar's height = wibar's height minus 2x margins
+            margins = 8
+        }),
+        brightness_widget({
+            get_brightness_cmd = 'light -G',
+            inc_brightness_cmd = 'light -A 10',
+            dec_brightness_cmd = 'light -U 10',
+        }), 
+        battery_widget(),
+        myseparator,
         wibox.widget.systray(),
-        mytextclock,
         s.mylayoutbox,
     },
 }
@@ -333,9 +362,23 @@ awful.key({ modkey, "Control" }, "n",
               end
           end,
           {description = "restore minimized", group = "client"}),
+          
+
+-- Volume Keys
+awful.key({}, "XF86AudioLowerVolume", function()
+    awful.util.spawn("amixer -q -D pulse sset Master 5%-", false)
+end), 
+awful.key({}, "XF86AudioRaiseVolume", function()
+    awful.util.spawn("amixer -q -D pulse sset Master 5%+", false)
+end), 
+
+-- brightness
+awful.key({}, "XF86MonBrightnessUp", function () awful.spawn("light -A 5") end, {description = "increase brightness", group = "custom"}),
+awful.key({}, "XF86MonBrightnessDown", function () awful.spawn("light -U 5") end, {description = "decrease brightness", group = "custom"}),
+
 
 -- Prompt
-awful.key({ modkey },            "l",     function () awful.screen.focused().mypromptbox:run() end,
+awful.key({ modkey },            "p",     function () awful.screen.focused().mypromptbox:run() end,
           {description = "run prompt", group = "launcher"}),
 
 awful.key({ modkey }, "x",
@@ -359,7 +402,7 @@ awful.key({ modkey }, "x",
  ), 
 
 -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
+    awful.key({ modkey }, "l", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
 
 
