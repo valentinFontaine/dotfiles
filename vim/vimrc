@@ -1,6 +1,6 @@
 
 set nocompatible
-filetype off
+filetype plugin on
 
 " Gestion des plugins
 " ____________________
@@ -15,8 +15,9 @@ endif
 call plug#begin()
 
     "Vim HardTime
-    Plug 'takac/vim-hardtime'
+    "Plug 'takac/vim-hardtime'
     Plug 'tclem/vim-arduino'
+    Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -56,6 +57,8 @@ set backspace=indent,eol,start
 
 "Active la coloration syntaxique
 syntax enable
+syntax on
+
 set background=dark
 colorscheme desert
 
@@ -67,7 +70,7 @@ hi IncSearch cterm=NONE ctermfg=DarkGrey ctermbg=lightGreen
 
 "Configuration de Hard-time
 let g:hardtime_default_on = 1
-let g:list_of_normal_keys = ["c", "t", "s", "r", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_normal_keys = ["t", "s", "r", "n", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_visual_keys = ["c", "t", "s", "r", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
 let g:list_of_disabled_keys = []
@@ -93,68 +96,69 @@ set hidden
 :imap ,, <Esc>
 :map ,, <Esc>
 
-
 " {W} -> [É]
 " ——————————
 " On remappe W sur É :
-noremap é w
-noremap É W
+" noremap é w
+" noremap É W
+
+
 " Corollaire: on remplace les text objects aw, aW, iw et iW
 " pour effacer/remplacer un mot quand on n’est pas au début (daé / laé).
-noremap aé aw
-noremap aÉ aW
-noremap ié iw
-noremap iÉ iW
-" Pour faciliter les manipulations de fenêtres, on utilise {W} comme un Ctrl+W :
-noremap w <C-w>
-noremap W <C-w><C-w>
+" noremap aé aw
+" noremap aÉ aW
+" noremap aè at
+" noremap ié iw
+" noremap iÉ iW
+" noremap iè it 
+" " Pour faciliter les manipulations de fenêtres, on utilise {W} comme un Ctrl+W :
+" noremap w <C-w>
+" noremap W <C-w><C-w>
  
-" [HJKL] -> {CTSR}
+" [HJKL] -> {TSRN}
 " ————————————————
 " {cr} = « gauche / droite »
-noremap c h
-noremap r l
+"noremap t h
+"noremap n l
 " {ts} = « haut / bas »
-noremap t j
-noremap s k
+"noremap s j
+"noremap r k
 " {CR} = « haut / bas de l'écran »
-noremap C H
-noremap R L
+"noremap T H
+"noremap N L
 " {TS} = « joindre / aide »
-noremap T J
-noremap S K
+"noremap S J
+"noremap N K
  
-" {HJKL} <- [CTSR]
+" {HJKL} <- [TSRN]
 " ————————————————
 " {J} = « Jusqu'à »            (j = suivant, J = précédant)
-noremap j t
-noremap J T
-" {L} = « Change »             (l = attend un mvt, L = jusqu'à la fin de ligne)
-noremap l c
-noremap L C
+"noremap j t
+"noremap J T
 " {H} = « Remplace »           (h = un caractère slt, H = reste en « Remplace »)
-noremap h r
-noremap H R
-" {K} = « Substitue »          (k = caractère, K = ligne)
-noremap k s
-noremap K S
+"noremap h r
+"noremap H R
+" {K} = « next search »          (k = caractère, K = ligne)
+"noremap k n
+"noremap K n
 " Corollaire : correction orthographique
-noremap ]k ]s
-noremap [k [s
+"noremap ]k ]s
+"noremap [k [s
+
 
 " Désambiguation de {g}
 " —————————————————————
 " ligne écran précédente / suivante (à l'intérieur d'une phrase)
-noremap gs gk
-noremap gt gj
+"noremap gs gk
+"noremap gt gj
 " onglet précédant / suivant
-noremap gb gT
-noremap gé gt
+"noremap gb gT
+"noremap gé gt
 " optionnel : {gB} / {gÉ} pour aller au premier / dernier onglet
-noremap gB :exe "silent! tabfirst"<CR>
-noremap gÉ :exe "silent! tablast"<CR>
+"noremap gB :exe "silent! tabfirst"<CR>
+"noremap gÉ :exe "silent! tablast"<CR>
 " optionnel : {g"} pour aller au début de la ligne écran
-noremap g" g0
+"noremap g" g0
  
 " <> en direct
 " ————————————
@@ -165,19 +169,16 @@ noremap <S-tab> <<
  
 " Remaper la gestion des fenêtres
 " ———————————————————————————————
-noremap wt <C-w>j
-noremap ws <C-w>k
-noremap wc <C-w>h
-noremap wr <C-w>l
-noremap wT <C-w>J
-noremap wS <C-w>K
-noremap wC <C-w>H
-noremap wR <C-w>L
-noremap wd <C-w>c
-noremap wo <C-w>s
-noremap wp <C-w>o
-noremap w<SPACE> :new<CR><C-w>J
-noremap w<CR> :vnew<CR><C-w>L
+"noremap ws <C-w>j
+"noremap wr <C-w>k
+"noremap wt <C-w>h
+"noremap wn <C-w>l
+"noremap wd <C-w>c
+"noremap wo <C-w>s
+"noremap wp <C-w>o
+"noremap w<SPACE> :split<CR>
+"noremap w<CR> :vsplit<CR>
+
 
 
 " Remappage des touches bépo pour l'utilisation de netrw
@@ -188,59 +189,9 @@ augroup netrw_dvorak_fix
     autocmd filetype netrw call Fix_netrw_maps_for_dvorak()
 augroup END
 function! Fix_netrw_maps_for_dvorak()
-    noremap <buffer> t j
-    noremap <buffer> s k
+    noremap <buffer> s j
+    noremap <buffer> r k
     noremap <buffer> k s
 endfunction
 endif
 
-"Remap de la touche échap
-:imap ,, <Esc>
-:map ,, <Esc>
-
-
-" {W} -> [É]
-" ——————————
-" On remappe W sur É :
-noremap é w
-noremap É W
-" Corollaire: on remplace les text objects aw, aW, iw et iW
-" pour effacer/remplacer un mot quand on n’est pas au début (daé / laé).
-noremap aé aw
-noremap aÉ aW
-noremap ié iw
-noremap iÉ iW
-" Pour faciliter les manipulations de fenêtres, on utilise {W} comme un Ctrl+W :
-noremap w <C-w>
-noremap W <C-w><C-w>
- 
-" [HJKL] -> {CTSR}
-" ————————————————
-" {cr} = « gauche / droite »
-noremap c h
-noremap r l
-" {ts} = « haut / bas »
-noremap t j
-noremap s k
-" {CR} = « haut / bas de l'écran »
-noremap C H
-noremap R L
-" {TS} = « joindre / aide »
-noremap T J
-noremap S K
- 
-" {HJKL} <- [CTSR]
-" ————————————————
-" {J} = « Jusqu'à »            (j = suivant, J = précédant)
-noremap j t
-noremap J T
-" {L} = « Change »             (l = attend un mvt, L = jusqu'à la fin de ligne)
-noremap l c
-noremap L C
-" {H} = « Remplace »           (h = un caractère slt, H = reste en « Remplace »)
-noremap h r
-noremap H R
-" {K} = « Substitue »          (k = caractère, K = ligne)
-noremap k s
-noremap K S
-" Corollaire : correction orthographique
