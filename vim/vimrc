@@ -183,15 +183,15 @@ noremap <S-tab> <<
 
 " Remappage des touches bépo pour l'utilisation de netrw
 " ____________________________________________________ 
-if has("autocmd")
-augroup netrw_dvorak_fix
-    autocmd!
-    autocmd filetype netrw call Fix_netrw_maps_for_dvorak()
-augroup END
-function! Fix_netrw_maps_for_dvorak()
-    noremap <buffer> s j
-    noremap <buffer> r k
-    noremap <buffer> k s
-endfunction
-endif
+"if has("autocmd")
+"augroup netrw_dvorak_fix
+"    autocmd!
+"    autocmd filetype netrw call Fix_netrw_maps_for_dvorak()
+"augroup END
+"function! Fix_netrw_maps_for_dvorak()
+"    noremap <buffer> s j
+"    noremap <buffer> r k
+"    noremap <buffer> k s
+"endfunction
+"endif
 
